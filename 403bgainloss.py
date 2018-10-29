@@ -6,7 +6,7 @@ import matplotlib.ticker as ticker
 import datetime
 import matplotlib.dates as mdates
 
-df = pd.read_csv("403b.csv")
+df = pd.read_csv("/home/john/Projects/PrincipalScraper/403b.csv")
 
 #ax = df.plot(kind='line', grid=True, x="Date", y=["TotalBalance","CumulativeContribution"])
 #ax.set_xlabel("Date", fontsize=12)

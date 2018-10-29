@@ -77,7 +77,7 @@ def get_last_row(csv_filename):
     with open(csv_filename,'r') as f:
         return deque(csv.reader(f), 1)[0]
 
-lastline = ",".join(get_last_row("403b.csv"))
+lastline = ",".join(get_last_row("/home/john/Projects/PrincipalScraper/403b.csv"))
 values = lastline.split(",")
 cumcontrib = float(values[6]) + float(contribtotal)
 cumcontrib = str(round(cumcontrib,2))
@@ -85,7 +85,7 @@ gainloss = float(elementext) - float(cumcontrib)
 gainloss = str(round(gainloss,2))
 
 fields = [today,contrib1,contrib2,contribtotal,elementext,none,cumcontrib,gainloss]
-with open(r'403b.csv','a') as file:
+with open(r'/home/john/Projects/PrincipalScraper/403b.csv','a') as file:
     write2file = csv.writer(file)
     write2file.writerow(fields)
     file.close()
