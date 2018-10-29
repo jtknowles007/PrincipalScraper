@@ -19,6 +19,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from credentials import *
 from collections import deque
+from paydatelist import *
 import time
 import datetime
 import csv
@@ -55,7 +56,6 @@ print(elementext)
 
 today = datetime.datetime.today().strftime('%m-%d-%Y')
 none = ""
-payday = [""]
 def contrib_today(mypay):
     thedate = datetime.datetime.today().strftime('%m-%d-%Y')
     for i in range(0,len(mypay)):
@@ -65,7 +65,7 @@ def contrib_today(mypay):
         else:
             total = "0.00"
     return total
-contribtotal = contrib_today(payday)
+contribtotal = contrib_today(paydate)
 if contribtotal == "0.00":
     contrib1 = "0.00"
     contrib2 = "0.00"
