@@ -12,3 +12,6 @@ ENV/
 
 # Sensitive information
 credentials.py
+403b.csv
+403b_archive.csv
+

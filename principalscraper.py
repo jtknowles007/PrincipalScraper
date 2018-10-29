@@ -18,7 +18,11 @@ Principal Scraper: Scrape current balance data from Principal Retirement site
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from credentials import *
+from collections import deque
 import time
+import datetime
+import csv
+import decimal
 ###############################################################################
 # Login to website
 ###############################################################################
@@ -48,4 +52,43 @@ elementext = element.text
 elementext = elementext.replace('$','')
 elementext = elementext.replace(',','')
 print(elementext)
+
+today = datetime.datetime.today().strftime('%m-%d-%Y')
+none = ""
+payday = [""]
+def contrib_today(mypay):
+    thedate = datetime.datetime.today().strftime('%m-%d-%Y')
+    for i in range(0,len(mypay)):
+        if thedate == mypay[i]:
+            total = "304.16"
+            break
+        else:
+            total = "0.00"
+    return total
+contribtotal = contrib_today(payday)
+if contribtotal == "0.00":
+    contrib1 = "0.00"
+    contrib2 = "0.00"
+else:
+    contrib1 = "140.38"
+    contrib2 = "163.78"
+
+def get_last_row(csv_filename):
+    with open(csv_filename,'r') as f:
+        return deque(csv.reader(f), 1)[0]
+
+lastline = ",".join(get_last_row("403b.csv"))
+values = lastline.split(",")
+cumcontrib = float(values[6]) + float(contribtotal)
+cumcontrib = str(round(cumcontrib,2))
+gainloss = float(elementext) - float(cumcontrib)
+gainloss = str(round(gainloss,2))
+
+fields = [today,contrib1,contrib2,contribtotal,elementext,none,cumcontrib,gainloss]
+with open(r'403b.csv','a') as file:
+    write2file = csv.writer(file)
+    write2file.writerow(fields)
+    file.close()
+print("csv updated")
+
 
