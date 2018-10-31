@@ -52,9 +52,10 @@ element = driver.find_element_by_id("total-balance")
 elementext = element.text
 elementext = elementext.replace('$','')
 elementext = elementext.replace(',','')
-print(elementext)
 
 today = datetime.datetime.today().strftime('%m-%d-%Y')
+print(today)
+print(elementext)
 none = ""
 def contrib_today(mypay):
     thedate = datetime.datetime.today().strftime('%m-%d-%Y')
