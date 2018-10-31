@@ -29,7 +29,7 @@ import decimal
 ###############################################################################
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--user-data-dir=/home/john/.config/google-chrome")
+chrome_options.add_argument("--user-data-dir=/home/john/.config/google-chrome/Profile 1")
 chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(options=chrome_options)
 
@@ -91,4 +91,4 @@ with open(r'/home/john/Projects/PrincipalScraper/403b.csv','a') as file:
     file.close()
 print("csv updated")
 
-
+driver.quit()
