@@ -5,20 +5,30 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import datetime
 import matplotlib.dates as mdates
+import numpy as np
+import matplotlib as mpl
+import matplotlib.style
+from cycler import cycler
 
-df = pd.read_csv("/home/john/Projects/PrincipalScraper/403b.csv")
+mpl.rcParams['axes.prop_cycle'] = cycler(color='bgrcmyk')
 
-#ax = df.plot(kind='line', grid=True, x="Date", y=["TotalBalance","CumulativeContribution"])
-#ax.set_xlabel("Date", fontsize=12)
-#ax.set_xticklabels(df['Date'], rotation=90)
-#ax.set_ylabel("Balance", fontsize=12)
-lines = plt.plot(df['Date'], df['GainOrLoss'])
-plt.title("403(b) Balance Over Time")
-ax = plt.axes()
+df = pd.read_csv("/home/john/Projects/PrincipalScraper/403b.csv", usecols=['Date','TotalBalance','GainOrLoss'], parse_dates=['Date'])
+df.set_index('Date',inplace=True)
+
+fig, ax = plt.subplots(figsize=(15,7))
+df.plot(ax=ax)
+
+fmt = '${x:,.0f}'
+tick = ticker.StrMethodFormatter(fmt)
+ax.yaxis.set_major_formatter(tick)
+
+start, end = ax.get_ylim()
+ax.yaxis.set_ticks(np.arange(500, end, 1000))
+
+ax.set_title("403b Total Balance and Capital Gain or Loss")
+ax.grid(which='major',axis='both')
 ax.xaxis.set_major_locator(mdates.MonthLocator())
-plt.xticks(rotation=60)
-plt.grid(True, which="major", axis="both")
-plt.xlabel("Date")
-plt.ylabel("Gain/Loss")
-plt.show()
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 
+plt.xticks(rotation=90, horizontalalignment="center")
+plt.show()
