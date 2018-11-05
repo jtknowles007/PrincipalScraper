@@ -51,8 +51,8 @@ def get_last_row(csv_filename):
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--user-data-dir=/home/john/.config/google-chrome/Profile 1")
 chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(options=chrome_options)
 
+driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://secure05.principal.com/member/accounts")
 time.sleep(2)
 
@@ -65,7 +65,6 @@ password.clear()
 password.send_keys(pswd)
 
 driver.find_element_by_id("loginBtn").click()
-
 time.sleep(2)
 
 ###############################################################################
