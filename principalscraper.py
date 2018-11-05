@@ -82,8 +82,6 @@ elementext = elementext.replace(',','')
 ###############################################################################
 
 today = datetime.datetime.today().strftime('%m-%d-%Y')
-print(today)
-print(elementext)
 none = ""
 
 contribtotal = contrib_today(paydate)
@@ -106,7 +104,7 @@ with open(r'/home/john/Projects/PrincipalScraper/403b.csv','a') as file:
     write2file = csv.writer(file)
     write2file.writerow(fields)
     file.close()
-print("csv updated")
+print(today + " - Total balance: $" + elementext + ". File 403b.csv updated.")
 
 ###############################################################################
 # Exit browser
