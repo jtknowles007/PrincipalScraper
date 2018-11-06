@@ -24,6 +24,7 @@ import time
 import datetime
 import csv
 import decimal
+import sys
 
 ###############################################################################
 # Functions
@@ -55,6 +56,10 @@ chrome_options.add_argument("--kiosk")
 driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://secure05.principal.com/member/accounts")
 time.sleep(2)
+
+if driver.find_element_by_class_name("bharosaPageTitle"):
+    print ("Ran into security verification notice. Unable to complete request.  Now exiting.")
+    sys.exit()
 
 username = driver.find_element_by_id("userid")
 password = driver.find_element_by_id("pass")
