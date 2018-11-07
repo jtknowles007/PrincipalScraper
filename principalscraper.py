@@ -57,10 +57,6 @@ driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://secure05.principal.com/member/accounts")
 time.sleep(2)
 
-if driver.find_element_by_class_name("bharosaPageTitle"):
-    print ("Ran into security verification notice. Unable to complete request.  Now exiting.")
-    sys.exit()
-
 username = driver.find_element_by_id("userid")
 password = driver.find_element_by_id("pass")
 
@@ -75,6 +71,11 @@ time.sleep(2)
 ###############################################################################
 # Scrape total balance
 ###############################################################################
+
+#if driver.find_element_by_class_name("bharosaPageTitle"):
+#    print ("Ran into security verification notice. Unable to complete request.  Now exiting.")
+#    sys.exit()
+
 
 element = driver.find_element_by_id("total-balance")
 elementext = element.text
