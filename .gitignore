@@ -11,10 +11,7 @@ venv/
 ENV/
 
 # Sensitive information
+*.csv
+*.json
 credentials.py
-403b.csv
-403b_archive.csv
-403b.csv.old
-501k.csv
-google.json
 
