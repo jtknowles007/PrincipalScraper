@@ -29,7 +29,14 @@ import decimal
 import sys
 import gspread
 
+###############################################################################
+# Variables
+###############################################################################
+
 accountname = sys.argv[1].lower()
+today = datetime.datetime.today().strftime('%m-%d-%Y')
+none = ""
+
 
 ###############################################################################
 # Functions
@@ -65,8 +72,6 @@ time.sleep(2)
 username = driver.find_element_by_id("userid")
 password = driver.find_element_by_id("pass")
 
-
-
 if accountname == "john":
     username.clear()
     username.send_keys(user_jtk)
@@ -85,11 +90,6 @@ time.sleep(2)
 # Scrape total balance
 ###############################################################################
 
-#if driver.find_element_by_class_name("bharosaPageTitle"):
-#    print ("Ran into security verification notice. Unable to complete request.  Now exiting.")
-#    sys.exit()
-
-
 element = driver.find_element_by_id("total-balance")
 elementext = element.text
 elementext = elementext.replace('$','')
@@ -98,9 +98,6 @@ elementext = elementext.replace(',','')
 ###############################################################################
 # Calculate Data to write
 ###############################################################################
-
-today = datetime.datetime.today().strftime('%m-%d-%Y')
-none = ""
 
 contribtotal = contrib_today(paydate)
 if contribtotal == "0.00":
