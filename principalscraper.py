@@ -21,12 +21,16 @@ from credentials import *
 from paydatelist import *
 from collections import deque
 from oauth2client.service_account import ServiceAccountCredentials
+from sys import argv
 import time
 import datetime
 import csv
 import decimal
 import sys
 import gspread
+
+accountname = sys.argv[1].lower()
+
 ###############################################################################
 # Functions
 ###############################################################################
@@ -61,10 +65,18 @@ time.sleep(2)
 username = driver.find_element_by_id("userid")
 password = driver.find_element_by_id("pass")
 
-username.clear()
-username.send_keys(user)
-password.clear()
-password.send_keys(pswd)
+
+
+if accountname == "john":
+    username.clear()
+    username.send_keys(user_jtk)
+    password.clear()
+    password.send_keys(pswd_jtk)
+elif accountname  == "carla":
+    username.clear()
+    username.send_keys(user_cjk)
+    password.clear()
+    password.send_keys(pswd_cjk)
 
 driver.find_element_by_id("loginBtn").click()
 time.sleep(2)
@@ -98,20 +110,27 @@ else:
     contrib1 = "140.38"
     contrib2 = "163.78"
 
-lastline = ",".join(get_last_row("/home/john/Projects/PrincipalScraper/403b.csv"))
+if accountname == "john":
+    csvchoice = "403b.csv"
+elif accountname == "carla":
+    csvchoice = "401k.csv"
+
+csvfile = "/home/john/Projects/PrincipalScraper/" + csvchoice
+
+lastline = ",".join(get_last_row(csvfile))
 values = lastline.split(",")
-cumcontrib = float(values[6]) + float(contribtotal)
+cumcontrib = float(values[5]) + float(contribtotal)
 cumcontrib = str(round(cumcontrib,2))
 gainloss = float(elementext) - float(cumcontrib)
 gainloss = str(round(gainloss,2))
 
-fields = [today,contrib1,contrib2,contribtotal,elemt,cumcontrib,gainloss]
+fields = [today,contrib1,contrib2,contribtotal,elementext,cumcontrib,gainloss]
 
 ###############################################################################
 # Write to CSV
 ###############################################################################
 
-with open(r'/home/john/Projects/PrincipalScraper/403b.csv','a') as file:
+with open(csvfile,'a') as file:
     write2file = csv.writer(file)
     write2file.writerow(fields)
     file.close()
@@ -124,7 +143,11 @@ scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/aut
 creds = ServiceAccountCredentials.from_json_keyfile_name('google.json',scope)
 client = gspread.authorize(creds)
 
-sheet = client.open('403(b)trends').sheet1
+if accountname == "john":
+    sheet = client.open('Principal Accounts').sheet1
+elif accountname == "carla":
+    sheet = client.open('Principal Accounts').sheet2
+
 sheet.append_row(fields)
 
 ###############################################################################
