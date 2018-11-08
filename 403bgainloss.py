@@ -12,7 +12,7 @@ from cycler import cycler
 
 mpl.rcParams['axes.prop_cycle'] = cycler(color='bgrcmyk')
 
-df = pd.read_csv("/home/john/Projects/PrincipalScraper/403b.csv", usecols=['Date','TotalBalance','GainOrLoss'], parse_dates=['Date'])
+df = pd.read_csv("/home/john/Projects/PrincipalScraper/403b.csv", usecols=['Date','Total Balance','Gain or Loss'], parse_dates=['Date'])
 df.set_index('Date',inplace=True)
 
 fig, ax = plt.subplots(figsize=(15,7))

@@ -20,12 +20,13 @@ from selenium.webdriver.support.ui import Select
 from credentials import *
 from paydatelist import *
 from collections import deque
+from oauth2client.service_account import ServiceAccountCredentials
 import time
 import datetime
 import csv
 import decimal
 import sys
-
+import gspread
 ###############################################################################
 # Functions
 ###############################################################################
@@ -83,7 +84,7 @@ elementext = elementext.replace('$','')
 elementext = elementext.replace(',','')
 
 ###############################################################################
-# Add data to CSV file
+# Calculate Data to write
 ###############################################################################
 
 today = datetime.datetime.today().strftime('%m-%d-%Y')
@@ -104,15 +105,31 @@ cumcontrib = str(round(cumcontrib,2))
 gainloss = float(elementext) - float(cumcontrib)
 gainloss = str(round(gainloss,2))
 
-fields = [today,contrib1,contrib2,contribtotal,elementext,none,cumcontrib,gainloss]
+fields = [today,contrib1,contrib2,contribtotal,elemt,cumcontrib,gainloss]
+
+###############################################################################
+# Write to CSV
+###############################################################################
+
 with open(r'/home/john/Projects/PrincipalScraper/403b.csv','a') as file:
     write2file = csv.writer(file)
     write2file.writerow(fields)
     file.close()
-print(today + " - Total balance: $" + elementext + ". File 403b.csv updated.")
 
 ###############################################################################
-# Exit browser
+# Write to Google Sheets
 ###############################################################################
 
+scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+creds = ServiceAccountCredentials.from_json_keyfile_name('google.json',scope)
+client = gspread.authorize(creds)
+
+sheet = client.open('403(b)trends').sheet1
+sheet.append_row(fields)
+
+###############################################################################
+# Wrap it up
+###############################################################################
+
+print(today + " - Total balance: $" + elementext + ". File 403b.csv and Google Sheet  updated.")
 driver.quit()
