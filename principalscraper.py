@@ -4,7 +4,6 @@
 #
 # Author: John T. Knowles, RN, RHIA
 # Date: October 26, 2018
-# Version: 0.1
 #
 ###############################################################################
 #
@@ -37,7 +36,7 @@ accountname = sys.argv[1].lower()
 today = datetime.datetime.today().strftime('%m-%d-%Y')
 none = ""
 chromeuser = "--user-data-dir=/home/john/.config/google-chrome/Profile 1"
-chromemode = "--start-maximized" #"--kiosk" 
+chromemode = "--start-maximized"
 
 ###############################################################################
 # Functions
@@ -59,7 +58,6 @@ def contrib_today(mypay,who):
 def get_last_row(csv_filename):
     with open(csv_filename,'r') as f:
         return deque(csv.reader(f), 1)[0]
-
 
 ###############################################################################
 # Login to website
@@ -102,6 +100,7 @@ elementext = elementext.replace(',','')
 ###############################################################################
 # Calculate Data to write
 ###############################################################################
+
 if accountname == "john":
     contribtotal = contrib_today(paydate_jtk,"jtk")
     if contribtotal == "0.00":
@@ -147,7 +146,11 @@ with open(csvfile,'a') as file:
 # Write to Google Sheets
 ###############################################################################
 
-scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
 creds = ServiceAccountCredentials.from_json_keyfile_name('google.json',scope)
 client = gspread.authorize(creds)
 
@@ -162,6 +165,8 @@ sheet.append_row(fields)
 # Wrap it up
 ###############################################################################
 
-print(today + " - " + accountuser.title() + "'s Principal account data updated in csv and Google Sheets.")
+wrapup = today + " - " + accountuser.title()
+wrapup = wrapup + "'s Principal account data updated in csv and Google Sheets."
 
+print(wrapup)
 driver.quit()
