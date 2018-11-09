@@ -36,17 +36,21 @@ import gspread
 accountname = sys.argv[1].lower()
 today = datetime.datetime.today().strftime('%m-%d-%Y')
 none = ""
-
+chromeuser = "--user-data-dir=/home/john/.config/google-chrome/Profile 1"
+chromemode = "--start-maximized" #"--kiosk" 
 
 ###############################################################################
 # Functions
 ###############################################################################
 
-def contrib_today(mypay):
+def contrib_today(mypay,who):
     thedate = datetime.datetime.today().strftime('%m-%d-%Y')
     for i in range(0,len(mypay)):
-        if thedate == mypay[i]:
+        if thedate == mypay[i] and who == "jtk":
             total = "304.16"
+            break
+        elif thedate == mypay[i] and who == "cjk":
+            total = "0.00"
             break
         else:
             total = "0.00"
@@ -62,8 +66,8 @@ def get_last_row(csv_filename):
 ###############################################################################
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--user-data-dir=/home/john/.config/google-chrome/Profile 1")
-chrome_options.add_argument("--kiosk")
+chrome_options.add_argument(chromeuser)
+chrome_options.add_argument(chromemode)
 
 driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://secure05.principal.com/member/accounts")
@@ -98,26 +102,33 @@ elementext = elementext.replace(',','')
 ###############################################################################
 # Calculate Data to write
 ###############################################################################
-
-contribtotal = contrib_today(paydate)
-if contribtotal == "0.00":
-    contrib1 = "0.00"
-    contrib2 = "0.00"
-else:
-    contrib1 = "140.38"
-    contrib2 = "163.78"
-
 if accountname == "john":
-    csvchoice = "403b.csv"
+    contribtotal = contrib_today(paydate_jtk,"jtk")
+    if contribtotal == "0.00":
+        contrib1 = "0.00"
+        contrib2 = "0.00"
+    else:
+        contrib1 = "140.38"
+        contrib2 = "163.78"
+    csvfile = "/home/john/Projects/PrincipalScraper/403b.csv"
+    lastline = ",".join(get_last_row(csvfile))
+    values = lastline.split(",")
+    cumcontrib = float(values[5]) + float(contribtotal)
+    cumcontrib = str(round(cumcontrib,2))
 elif accountname == "carla":
-    csvchoice = "401k.csv"
+    contribtotal = contrib_today(paydate_cjk,"cjk")
+    if contribtotal == "0.00":
+        contrib1 = "0.00"
+        contrib2 = "0.00"
+    else:
+        contrib1 = "0.00"
+        contrib2 = "0.00"
+    csvfile = "/home/john/Projects/PrincipalScraper/401k.csv"
+    lastline = ",".join(get_last_row(csvfile))
+    values = lastline.split(",")
+    cumcontrib = float(values[5]) + float(contribtotal)
+    cumcontrib = str(round(cumcontrib,2))
 
-csvfile = "/home/john/Projects/PrincipalScraper/" + csvchoice
-
-lastline = ",".join(get_last_row(csvfile))
-values = lastline.split(",")
-cumcontrib = float(values[5]) + float(contribtotal)
-cumcontrib = str(round(cumcontrib,2))
 gainloss = float(elementext) - float(cumcontrib)
 gainloss = str(round(gainloss,2))
 
@@ -141,9 +152,9 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('google.json',scope)
 client = gspread.authorize(creds)
 
 if accountname == "john":
-    sheet = client.open('Principal Accounts').sheet1
+    sheet = client.open('Principal Accounts').get_worksheet(0)
 elif accountname == "carla":
-    sheet = client.open('Principal Accounts').sheet2
+    sheet = client.open('Principal Accounts').get_worksheet(1)
 
 sheet.append_row(fields)
 
@@ -151,5 +162,6 @@ sheet.append_row(fields)
 # Wrap it up
 ###############################################################################
 
-print(today + " - Total balance: $" + elementext + ". File 403b.csv and Google Sheet  updated.")
+print(today + " - " + accountuser.title() + "'s Principal account data updated in csv and Google Sheets.")
+
 driver.quit()
