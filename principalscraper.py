@@ -165,7 +165,7 @@ sheet.append_row(fields)
 # Wrap it up
 ###############################################################################
 
-wrapup = today + " - " + accountuser.title()
+wrapup = today + " - " + accountname.title()
 wrapup = wrapup + "'s Principal account data updated in csv and Google Sheets."
 
 print(wrapup)
