@@ -31,8 +31,11 @@ import gspread
 ###############################################################################
 # Variables
 ###############################################################################
+if len(sys.argv) > 1:
+    accountname = sys.argv[1].lower()
+else:
+    print("No user argument provided.  Please call script with either 'john' or 'carla' as an argument.")
 
-accountname = sys.argv[1].lower()
 today = datetime.datetime.today().strftime('%m-%d-%Y')
 none = ""
 chromeuser = "--user-data-dir=/home/john/.config/google-chrome/Profile 1"
