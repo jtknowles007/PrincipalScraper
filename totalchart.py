@@ -12,7 +12,7 @@ from cycler import cycler
 import sys
 
 if len(sys.argv) >1:
-    user = sys.argv[1]
+    user = sys.argv[1].lower()
 else:
     print("No user argument provided.  Please call script with either 'john' or 'carla' as an argument.")
     exit()
