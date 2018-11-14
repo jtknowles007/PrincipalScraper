@@ -14,7 +14,7 @@ import sys
 if len(sys.argv) >1:
     user = sys.argv[1]
 else:
-    print("You did not suppy a user.")
+    print("No user argument provided.  Please call script with either 'john' or 'carla' as an argument.")
     exit()
 
 mpl.rcParams['axes.prop_cycle'] = cycler(color='bgrcmyk')
@@ -24,7 +24,7 @@ if user == "john":
 elif user == 'carla':
     thefile = basefile + '401k.csv'
 else:
-    print("I don't know that user.")
+    print("I don't know that user.  Please call script with either 'john' or 'carla' as an argument.")
     exit()
 
 df = pd.read_csv(thefile, usecols=['Date','Total Balance','Cumulative Contribution'], parse_dates=['Date'])
