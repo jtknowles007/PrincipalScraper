@@ -49,7 +49,7 @@ def contrib_today(mypay,who):
     thedate = datetime.datetime.today().strftime('%m-%d-%Y')
     for i in range(0,len(mypay)):
         if thedate == mypay[i] and who == "jtk":
-            total = "304.16"
+            total = "316.56"
             break
         elif thedate == mypay[i] and who == "cjk":
             total = "0.00"
@@ -110,8 +110,8 @@ if accountname == "john":
         contrib1 = "0.00"
         contrib2 = "0.00"
     else:
-        contrib1 = "140.38"
-        contrib2 = "163.78"
+        contrib1 = "146.11"
+        contrib2 = "170.45"
     csvfile = "/home/john/Projects/PrincipalScraper/403b.csv"
     lastline = ",".join(get_last_row(csvfile))
     values = lastline.split(",")

@@ -42,7 +42,7 @@ if user == 'john':
     ax.yaxis.set_ticks(np.arange(6000, end, 1000))
     ax.set_title("403b Total Balance and Contributions Over Time")
 elif user == 'carla':
-    ax.yaxis.set_ticks(np.arange(0, end, 25))
+    ax.yaxis.set_ticks(np.arange(1000, end, 1000))
     ax.set_title("401k Total Balance and Contributions Over Time")
 ax.grid(which='major',axis='both')
 ax.xaxis.set_major_locator(mdates.MonthLocator())
