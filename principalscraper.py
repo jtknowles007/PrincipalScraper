@@ -154,7 +154,7 @@ scope = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-creds = ServiceAccountCredentials.from_json_keyfile_name('google.json',scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name('/home/john/Projects/PrincipalScraper/google.json',scope)
 client = gspread.authorize(creds)
 
 if accountname == "john":
