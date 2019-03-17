@@ -91,6 +91,11 @@ elif accountname  == "carla":
 driver.find_element_by_id("loginBtn").click()
 time.sleep(2)
 
+
+if accountname == "carla":
+    driver.find_element_by_link_text("SERVANT SOLUTIONS, INC.").click()
+    time.sleep(2)
+
 ###############################################################################
 # Scrape total balance
 ###############################################################################
