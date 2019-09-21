@@ -67,7 +67,7 @@ def get_last_row(csv_filename):
 ###############################################################################
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument(chromeuser)
+# chrome_options.add_argument(chromeuser)
 chrome_options.add_argument(chromemode)
 
 driver = webdriver.Chrome(options=chrome_options)
@@ -92,9 +92,9 @@ driver.find_element_by_id("loginBtn").click()
 time.sleep(2)
 
 
-if accountname == "carla":
-    driver.find_element_by_link_text("SERVANT SOLUTIONS, INC.").click()
-    time.sleep(2)
+#if accountname == "carla":
+#    driver.find_element_by_link_text("SERVANT SOLUTIONS, INC.").click()
+#    time.sleep(2)
 
 ###############################################################################
 # Scrape total balance
