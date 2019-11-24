@@ -74,8 +74,8 @@ driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://secure05.principal.com/member/accounts")
 time.sleep(2)
 
-username = driver.find_element_by_id("userid")
-password = driver.find_element_by_id("pass")
+username = driver.find_element_by_id("username")
+password = driver.find_element_by_id("password")
 
 if accountname == "john":
     username.clear()
