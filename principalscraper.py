@@ -88,7 +88,7 @@ elif accountname  == "carla":
     password.clear()
     password.send_keys(pswd_cjk)
 
-driver.find_element_by_id("loginBtn").click()
+driver.find_element_by_id("continue").click()
 time.sleep(2)
 
 
